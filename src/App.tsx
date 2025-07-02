@@ -24,7 +24,7 @@ function App() {
   const staffDatabase = {
     '1': { id: '1', name: 'Sarah Johnson', role: 'cashier' as const },
     '2': { id: '2', name: 'Mike Chen', role: 'manager' as const },
-    '3': { id: '3', name: 'Emma Davis', role: 'barista' as const },
+    '3': { id: '3', name: 'Hadi Latip', role: 'barista' as const },
   };
 
   // Update time every second

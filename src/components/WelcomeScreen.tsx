@@ -14,7 +14,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onAuthenticate }) => {
   const staffPins = {
     '1234': { id: '1', name: 'Sarah Johnson', role: 'cashier' },
     '5678': { id: '2', name: 'Mike Chen', role: 'manager' },
-    '9999': { id: '3', name: 'Emma Davis', role: 'barista' },
+    '9999': { id: '3', name: 'Hadi Latip', role: 'barista' },
   };
 
   const handleNumberPress = (number: string) => {
@@ -163,7 +163,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onAuthenticate }) => {
           <div className="space-y-1 text-xs text-white/70">
             <p><span className="font-mono bg-white/20 px-2 py-1 rounded">1234</span> - Sarah (Cashier)</p>
             <p><span className="font-mono bg-white/20 px-2 py-1 rounded">5678</span> - Mike (Manager)</p>
-            <p><span className="font-mono bg-white/20 px-2 py-1 rounded">9999</span> - Emma (Barista)</p>
+            <p><span className="font-mono bg-white/20 px-2 py-1 rounded">9999</span> - Hadi (Barista)</p>
           </div>
         </div>
       </div>
