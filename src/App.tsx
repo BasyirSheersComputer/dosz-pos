@@ -5,22 +5,27 @@ import ProductGrid from './components/ProductGrid';
 import Cart from './components/Cart';
 import OrderHistory from './components/OrderHistory';
 import CustomizationModal from './components/CustomizationModal';
+import WelcomeScreen from './components/WelcomeScreen';
 import { products, categories } from './data/products';
 import { CartItem, Product, Order, Staff, Customer } from './types';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
   const [activeCategory, setActiveCategory] = useState('All');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
-  const [currentStaff] = useState<Staff>({
-    id: '1',
-    name: 'Sarah Johnson',
-    role: 'cashier',
-  });
+  const [currentStaff, setCurrentStaff] = useState<Staff | null>(null);
   const [currentCustomer, setCurrentCustomer] = useState<Customer>();
   const [isCustomizationModalOpen, setIsCustomizationModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  // Staff database - in production, this would be from a secure backend
+  const staffDatabase = {
+    '1': { id: '1', name: 'Sarah Johnson', role: 'cashier' as const },
+    '2': { id: '2', name: 'Mike Chen', role: 'manager' as const },
+    '3': { id: '3', name: 'Emma Davis', role: 'barista' as const },
+  };
 
   // Update time every second
   useEffect(() => {
@@ -29,6 +34,29 @@ function App() {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Handle authentication
+  const handleAuthenticate = (staffId: string) => {
+    const staff = staffDatabase[staffId as keyof typeof staffDatabase];
+    if (staff) {
+      setCurrentStaff(staff);
+      setIsAuthenticated(true);
+    }
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCurrentStaff(null);
+    setCartItems([]);
+    setCurrentCustomer(undefined);
+    setActiveCategory('All');
+  };
+
+  // Show welcome screen if not authenticated
+  if (!isAuthenticated || !currentStaff) {
+    return <WelcomeScreen onAuthenticate={handleAuthenticate} />;
+  }
 
   // Filter products by category
   const filteredProducts = activeCategory === 'All' 
@@ -132,10 +160,6 @@ function App() {
   const handleOrderSelect = (order: Order) => {
     // In real app, this would open order details modal
     console.log('Selected order:', order);
-  };
-
-  const handleLogout = () => {
-    console.log('Logout');
   };
 
   const handleSettings = () => {
